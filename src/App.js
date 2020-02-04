@@ -1,23 +1,40 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import Posts from "./components/Posts";
-import Postform from "./components/Postform";
+import Login from "./components/Login";
+import Reports from "./components/Reports";
 
 import { Provider } from "react-redux";
 
 import store from "./store";
 
+function logout() {
+  debugger;
+  // credentials.logout();
+}
+
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
-          <Postform />
-          <Posts />
-        </div>
+        <button
+          className="logout button-color button-color-fail"
+          onClick={logout}
+        >
+          Logout
+        </button>
+        <Reports />
+        <Login />
       </Provider>
     );
+    /*
+    
+    
+    <!--div className="App">
+      <Postform />
+      <Posts />
+    </div>
+    */
   }
 }
 

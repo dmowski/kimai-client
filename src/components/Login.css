@@ -1,0 +1,53 @@
+.login-container h1 {
+  margin-top: 0;
+}
+.login-container {
+  background: linear-gradient(to bottom, #eeffff, #ffffff);
+  color: color("base");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login-container form {
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  min-width: 360px;
+  margin: 100px auto;
+  padding: 45px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 0 55px 0 rgba(0, 0, 0, 0.1);
+  transition: all 200ms;
+}
+
+.login-container input {
+  width: 300px;
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+.login-container img {
+  width: 500px;
+  transform: scale(1.19);
+  margin: 45px 0 55px 0;
+}
+.login-container button {
+  width: 100%;
+  max-width: 300px;
+}
+
+.login-container .get-info-link {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+  color: #2582e7;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.login-container .how-get-api {
+  text-align: left;
+}
