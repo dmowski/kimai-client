@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import "./PreviewReport.css";
+import "../styles/PreviewReport.css";
 
 class PreviewReport extends Component {
   render() {

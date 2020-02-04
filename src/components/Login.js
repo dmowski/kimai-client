@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import "./Login.css";
+import "../styles/Login.css";
 let APIinformationImage = "./loginInformation.png";
 
 class Login extends Component {
