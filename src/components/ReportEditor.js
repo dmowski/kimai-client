@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import "../styles/ReportEditor.css";
+import "../styles/ReportEditor.scss";
 
 class ReportEditor extends Component {
   render() {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import "../styles/Reports.css";
+import "../styles/Reports.scss";
 import ReportEditor from "./ReportEditor";
 import PreviewReport from "./PreviewReport";
 
