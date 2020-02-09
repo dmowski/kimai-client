@@ -1,33 +1,42 @@
-import React, { Component } from "react";
+import React, { useContext, useEffect } from "react";
+import { ReportContext } from "../context/ReportContext";
 
-import { connect } from "react-redux";
 import "../styles/Reports.scss";
-import ReportEditor from "./ReportEditor";
+// import ReportEditor from "./ReportEditor";
 import PreviewReport from "./PreviewReport";
 
-class Reports extends Component {
-  render() {
-    return (
-      <div className="reports">
-        <div className="list">
-          <h3>Reports</h3>
+export default function Reports() {
+  const { fetchReports, state } = useContext(ReportContext);
 
-          <div className="day-block">
-            <p className="day-title">
-              <b>title</b>
-              <span>• 2h</span>
-            </p>
-            <PreviewReport />
-          </div>
-        </div>
+  useEffect(() => {
+    fetchReports();
+  }, []);
 
-        <div className="report-editor">
-          <h3>Editor</h3>
-          <ReportEditor />
+  const reports = state.reports || [];
+  console.log("reports", reports);
+
+  return (
+    <div className="reports">
+      <div className="list">
+        <h3>Reports</h3>
+
+        <div className="day-block">
+          <p className="day-title">
+            <b>title</b>
+            <span>• 2h</span>
+          </p>
+          {reports.map(report => {
+            return <PreviewReport report={report} key={report.id} />;
+          })}
         </div>
       </div>
-    );
-  }
-}
 
-export default connect(null, {})(Reports);
+      <div className="report-editor">
+        <h3>Editor</h3>
+        {/*
+          <ReportEditor key={report.id} />
+        */}
+      </div>
+    </div>
+  );
+}

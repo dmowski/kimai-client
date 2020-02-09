@@ -1,19 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 
-import { connect } from "react-redux";
 import "../styles/PreviewReport.scss";
+import converters from "../converters";
 
-class PreviewReport extends Component {
-  render() {
-    return (
-      <article className="preview-report">
-        <p className="description">description</p>
-        <p className="project">project</p>
-        <p className="activity">activity</p>
-        <p className="duration">2h</p>
-      </article>
-    );
-  }
+export default function PreviewReport({ report = {} }) {
+  return (
+    <article className="preview-report">
+      <p className="description">{report.description || ""}</p>
+      <p className="project">{report.project?.name || ""}</p>
+      <p className="activity">{report.activity?.name || ""}</p>
+      {/*
+      <p className="date">
+        <i>{converter.date.toView(report.end)}</i>
+      </p>
+      */}
+      <p className="duration">{converters.duration.toView(report.duration)}</p>
+    </article>
+  );
 }
-
-export default connect(null, {})(PreviewReport);

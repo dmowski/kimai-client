@@ -38,7 +38,13 @@
     max-width: 300px;
   }
 
+  summary {
+    margin: 0 auto;
+    width: 300px;
+  }
+
   .get-info-link {
+    display: inline;
     margin: 15px 0 0;
     color: #b3b3b3;
     font-size: 12px;

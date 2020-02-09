@@ -1,44 +1,74 @@
-import React, { Component } from "react";
-
-import { connect } from "react-redux";
+import React, { useContext, useState } from "react";
+import { ReportContext } from "../context/ReportContext";
 import "../styles/Login.scss";
+
 let APIinformationImage = "./loginInformation.png";
 
-class Login extends Component {
-  render() {
-    return (
-      <div style={{ display: "none" }}>
-        <div className="login-container">
-          <form>
-            <h1>Kimai</h1>
+export default function Login() {
+  const { login, state } = useContext(ReportContext);
 
-            <label>
-              <input name="url" placeholder="Kimai URL" type="text" required />
-            </label>
+  const [loginStr, setLogin] = useState("");
+  const [passwordStr, setPassword] = useState("");
+  const [urlStr, setUrl] = useState("");
 
-            <label>
-              <input
-                autoFocus
-                name="login"
-                placeholder="login"
-                type="text"
-                required
-              />
-            </label>
+  async function loginFromForm(event) {
+    event.preventDefault();
+    const isCorrectLogin = await login(urlStr, loginStr, passwordStr);
 
-            <label>
-              <input
-                name="token"
-                placeholder="API password"
-                type="password"
-                required
-              />
-            </label>
-            <button type="submit" className="button-color button-color-fill">
-              Login
-            </button>
-            <p className="get-info-link">How to generate API password?</p>
-            <div className="how-get-api" style={{ display: "none" }}>
+    if (!isCorrectLogin) {
+      alert("Token or login is not correct");
+    }
+  }
+
+  const displayStatus = state?.credentials ? "none" : "block";
+
+  return (
+    <div style={{ display: displayStatus }}>
+      <div className="login-container">
+        <form onSubmit={loginFromForm}>
+          <h1>Kimai</h1>
+
+          <label>
+            <input
+              name="url"
+              value={urlStr}
+              onChange={event => setUrl(event.target.value)}
+              placeholder="Kimai URL"
+              type="text"
+              required
+            />
+          </label>
+
+          <label>
+            <input
+              autoFocus
+              name="login"
+              placeholder="login"
+              type="text"
+              value={loginStr}
+              onChange={event => setLogin(event.target.value)}
+              required
+            />
+          </label>
+
+          <label>
+            <input
+              name="token"
+              placeholder="API password"
+              type="password"
+              value={passwordStr}
+              onChange={event => setPassword(event.target.value)}
+              required
+            />
+          </label>
+          <button type="submit" className="button-color button-color-fill">
+            Login
+          </button>
+          <details>
+            <summary>
+              <p className="get-info-link">How to generate API password?</p>
+            </summary>
+            <div className="how-get-api">
               <img src={APIinformationImage} alt="" />
               <p>
                 Open
@@ -60,11 +90,9 @@ class Login extends Component {
                 <b>API password</b>
               </p>
             </div>
-          </form>
-        </div>
+          </details>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default connect(null, {})(Login);

@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: 65% 10% 1fr 50px;
   align-items: center;
+  overflow: hidden;
   justify-content: space-between;
   cursor: pointer;
 

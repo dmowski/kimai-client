@@ -2,17 +2,20 @@ import dayjs from "dayjs";
 
 export default {
   parseKiamaiUrl(urlString) {
-    const urlObject = new URL(urlString);
-    const APIurl = urlObject.origin + "/api/";
-
-    return APIurl;
+    try {
+      const urlObject = new URL(urlString);
+      const APIurl = urlObject.origin + "/api/";
+      return APIurl;
+    } catch {
+      return "";
+    }
   },
   date: {
     toView(originDateString) {
-      originDateString = originDateString || '';
+      originDateString = originDateString || "";
       const day = dayjs(originDateString || Date());
 
-      return day.format('YYYY-MM-DD');
+      return day.format("YYYY-MM-DD");
     },
     toSrc(userViewString) {
       const date = new Date(userViewString);
