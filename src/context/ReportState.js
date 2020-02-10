@@ -61,10 +61,13 @@ export const ReportState = ({ children }) => {
     login(url, loginStr, password);
   }
 
+  const reports = state?.reports || [];
   function selectReport(id) {
+    const report = reports.find(report => report.id === id) || { id };
+
     dispatch({
       type: types.SELECT_REPORT,
-      payload: { id }
+      payload: report
     });
   }
 
@@ -74,6 +77,7 @@ export const ReportState = ({ children }) => {
     <ReportContext.Provider
       value={{
         selectReport,
+        reports,
         checkedCredentials,
         selectedReport,
         state,

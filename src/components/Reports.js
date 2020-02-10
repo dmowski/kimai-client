@@ -8,13 +8,12 @@ import ReportEditor from "./ReportEditor";
 import PreviewReport from "./PreviewReport";
 
 export default function Reports() {
-  const { fetchReports, state } = useContext(ReportContext);
+  const { fetchReports, reports } = useContext(ReportContext);
 
   useEffect(() => {
     fetchReports();
   }, []);
 
-  const reports = state.reports || [];
   const todayString = dayjs(Date()).format("YYYY-MM-DD");
   const listOfDays = [
     ...new Set(

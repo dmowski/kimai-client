@@ -1,12 +1,12 @@
 import * as types from "./types";
 
 const handlers = {
-  [types.SELECT_REPORT]: (state, { payload: { id } }) => {
-    console.log("id", id);
+  [types.SELECT_REPORT]: (state, { payload: report }) => {
+    const copyOfReport = JSON.parse(JSON.stringify(report));
 
     return {
       ...state,
-      selectedReport: { id }
+      selectedReport: copyOfReport
     };
   },
   [types.FETCH_REPORTS]: (state, { payload }) => {
