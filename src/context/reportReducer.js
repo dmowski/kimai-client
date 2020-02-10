@@ -1,13 +1,21 @@
-import { LOGIN, LOGOUT, FETCH_REPORTS } from "./types";
+import * as types from "./types";
 
 const handlers = {
-  [FETCH_REPORTS]: (state, { payload }) => {
+  [types.SELECT_REPORT]: (state, { payload: { id } }) => {
+    console.log("id", id);
+
+    return {
+      ...state,
+      selectedReport: { id }
+    };
+  },
+  [types.FETCH_REPORTS]: (state, { payload }) => {
     return {
       ...state,
       reports: payload
     };
   },
-  [LOGIN]: (state, { payload: { url, login, password } }) => {
+  [types.LOGIN]: (state, { payload: { url, login, password } }) => {
     return {
       ...state,
       credentials: {
@@ -31,7 +39,7 @@ const handlers = {
       }
     };
   },
-  [LOGOUT]: state => null,
+  [types.LOGOUT]: state => null,
   DEFAULT: state => state
 };
 

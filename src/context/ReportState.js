@@ -3,7 +3,7 @@ import { ReportContext } from "./ReportContext";
 import converters from "../converters";
 import { reportReducer } from "./reportReducer";
 import kimaiApi from "../kimaiApi";
-import { FETCH_REPORTS, LOGOUT } from "./types";
+import * as types from "./types";
 
 export const ReportState = ({ children }) => {
   const [state, dispatch] = useReducer(
@@ -26,7 +26,7 @@ export const ReportState = ({ children }) => {
     );
     if (Array.isArray(reports)) {
       dispatch({
-        type: FETCH_REPORTS,
+        type: types.FETCH_REPORTS,
         payload: reports
       });
     }
@@ -34,7 +34,7 @@ export const ReportState = ({ children }) => {
 
   function logout() {
     dispatch({
-      type: LOGOUT
+      type: types.LOGOUT
     });
   }
 
@@ -60,11 +60,21 @@ export const ReportState = ({ children }) => {
     login(url, loginStr, password);
   }
 
+  function selectReport(id) {
+    dispatch({
+      type: types.SELECT_REPORT,
+      payload: { id }
+    });
+  }
+
   const checkedCredentials = state?.credentials?.check;
+  const selectedReport = state?.selectedReport || {};
   return (
     <ReportContext.Provider
       value={{
+        selectReport,
         checkedCredentials,
+        selectedReport,
         state,
         logout,
         login,
