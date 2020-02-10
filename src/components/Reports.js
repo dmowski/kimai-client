@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import converter from "../converters";
 
 import "../styles/Reports.scss";
-// import ReportEditor from "./ReportEditor";
+import ReportEditor from "./ReportEditor";
 import PreviewReport from "./PreviewReport";
 
 export default function Reports() {
@@ -83,10 +83,7 @@ export default function Reports() {
       </div>
 
       <div className="report-editor">
-        <h3>Editor</h3>
-        {/*
-          <ReportEditor key={report.id} />
-        */}
+        <ReportEditor />
       </div>
     </div>
   );
