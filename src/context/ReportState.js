@@ -12,10 +12,11 @@ export const ReportState = ({ children }) => {
   );
 
   useEffect(() => {
-    const copyOfState = JSON.parse(JSON.stringify(state));
-    if (copyOfState?.credentials) {
-      delete copyOfState.credentials.check;
-    }
+    let copyOfState = JSON.parse(JSON.stringify(state));
+    delete copyOfState?.credentials?.check;
+    copyOfState = {
+      credentials: copyOfState.credentials
+    };
     localStorage.setItem("state", JSON.stringify(copyOfState));
   }, [state]);
 
