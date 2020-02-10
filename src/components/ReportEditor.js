@@ -6,7 +6,14 @@ import { ReportContext } from "../context/ReportContext";
 import "../styles/ReportEditor.scss";
 
 export default function ReportEditor() {
-  const { selectReport, selectedReport } = useContext(ReportContext);
+  const {
+    selectReport,
+    selectedReport,
+    customers,
+    activities,
+    projects
+  } = useContext(ReportContext);
+
   const style = {
     display: selectedReport.id ? "block" : "none"
   };
@@ -18,7 +25,7 @@ export default function ReportEditor() {
           <label>
             <span>Description:</span>
             <br />
-            <textarea name="description" />
+            <textarea name="description" value={selectedReport.description} />
           </label>
           <br />
           <div className="row">

@@ -8,9 +8,10 @@ import ReportEditor from "./ReportEditor";
 import PreviewReport from "./PreviewReport";
 
 export default function Reports() {
-  const { fetchReports, reports } = useContext(ReportContext);
+  const { fetchReports, reports, fetchStatic } = useContext(ReportContext);
 
   useEffect(() => {
+    fetchStatic();
     fetchReports();
   }, []);
 

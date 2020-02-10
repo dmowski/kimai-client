@@ -33,6 +33,37 @@ export const ReportState = ({ children }) => {
     }
   };
 
+  const fetchStatic = async () => {
+    let customers = kimaiApi.getCustomers(
+      state.credentials.url,
+      state.credentials.headers
+    );
+
+    let activities = kimaiApi.getActivities(
+      state.credentials.url,
+      state.credentials.headers
+    );
+
+    let projects = kimaiApi.getProjects(
+      state.credentials.url,
+      state.credentials.headers
+    );
+    customers = await customers;
+    activities = await activities;
+    projects = await projects;
+
+    if (Array.isArray(reports)) {
+      dispatch({
+        type: types.FETCH_STATIC,
+        payload: {
+          customers,
+          activities,
+          projects
+        }
+      });
+    }
+  };
+
   function logout() {
     dispatch({
       type: types.LOGOUT
@@ -73,10 +104,18 @@ export const ReportState = ({ children }) => {
 
   const checkedCredentials = state?.credentials?.check;
   const selectedReport = state?.selectedReport || {};
+  const customers = state?.static?.customers || [];
+  const activities = state?.static?.activities || [];
+  const projects = state?.static?.projects || [];
+
   return (
     <ReportContext.Provider
       value={{
         selectReport,
+        fetchStatic,
+        customers,
+        activities,
+        projects,
         reports,
         checkedCredentials,
         selectedReport,

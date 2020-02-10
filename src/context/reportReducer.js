@@ -1,6 +1,15 @@
 import * as types from "./types";
 
 const handlers = {
+  [types.FETCH_STATIC]: (
+    state,
+    { payload: { customers, activities, projects } }
+  ) => {
+    return {
+      ...state,
+      static: { customers, activities, projects }
+    };
+  },
   [types.SELECT_REPORT]: (state, { payload: report }) => {
     const copyOfReport = JSON.parse(JSON.stringify(report));
 
