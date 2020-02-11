@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { ReportContext } from "../context/report/ReportContext";
+import { AuthContext } from "../context/auth/AuthContext";
 import "../styles/Login.scss";
 
 let APIinformationImage = "./loginInformation.png";
 
 export default function Login() {
-  const { login, state } = useContext(ReportContext);
+  const { login, headers } = useContext(AuthContext);
 
   const [loginStr, setLogin] = useState("");
   const [passwordStr, setPassword] = useState("");
@@ -20,7 +20,7 @@ export default function Login() {
     }
   }
 
-  const displayStatus = state?.credentials ? "none" : "block";
+  const displayStatus = headers ? "none" : "block";
 
   return (
     <div style={{ display: displayStatus }}>

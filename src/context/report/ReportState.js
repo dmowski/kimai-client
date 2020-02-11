@@ -1,30 +1,24 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useContext } from "react";
 import { ReportContext } from "./ReportContext";
-import converters from "../../converters";
+import { AuthContext } from "../auth/AuthContext";
 import { reportReducer } from "./reportReducer";
 import kimaiApi from "../../kimaiApi";
 import * as types from "../types";
 
 export const ReportState = ({ children }) => {
+  const { url, headers } = useContext(AuthContext);
+
   const [state, dispatch] = useReducer(
     reportReducer,
     JSON.parse(localStorage.getItem("state") || "{}")
   );
 
   useEffect(() => {
-    let copyOfState = JSON.parse(JSON.stringify(state));
-    delete copyOfState?.credentials?.check;
-    copyOfState = {
-      credentials: copyOfState.credentials
-    };
-    localStorage.setItem("state", JSON.stringify(copyOfState));
+    // localStorage.setItem("state", JSON.stringify(state));
   }, [state]);
 
   const fetchReports = async () => {
-    const reports = await kimaiApi.getAllReports(
-      state.credentials.url,
-      state.credentials.headers
-    );
+    const reports = await kimaiApi.getAllReports(url, headers);
     if (Array.isArray(reports)) {
       dispatch({
         type: types.FETCH_REPORTS,
@@ -34,20 +28,9 @@ export const ReportState = ({ children }) => {
   };
 
   const fetchStatic = async () => {
-    let customers = kimaiApi.getCustomers(
-      state.credentials.url,
-      state.credentials.headers
-    );
-
-    let activities = kimaiApi.getActivities(
-      state.credentials.url,
-      state.credentials.headers
-    );
-
-    let projects = kimaiApi.getProjects(
-      state.credentials.url,
-      state.credentials.headers
-    );
+    let customers = kimaiApi.getCustomers(url, headers);
+    let activities = kimaiApi.getActivities(url, headers);
+    let projects = kimaiApi.getProjects(url, headers);
     customers = await customers;
     activities = await activities;
     projects = await projects;
@@ -64,34 +47,6 @@ export const ReportState = ({ children }) => {
     }
   };
 
-  function logout() {
-    dispatch({
-      type: types.LOGOUT
-    });
-  }
-
-  async function login(url, login, password) {
-    const urlclear = converters.parseKiamaiUrl(url);
-    const isCorrectLogin = await kimaiApi.checkLogin(login, password, urlclear);
-
-    if (isCorrectLogin) {
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          url: urlclear,
-          login,
-          password
-        }
-      });
-    }
-    return isCorrectLogin;
-  }
-
-  if (state?.credentials && !state.credentials?.check) {
-    const { url, login: loginStr, password } = state.credentials;
-    login(url, loginStr, password);
-  }
-
   const reports = state?.reports || [];
   function selectReport(id) {
     const report = reports.find(report => report.id === id) || { id };
@@ -102,7 +57,6 @@ export const ReportState = ({ children }) => {
     });
   }
 
-  const checkedCredentials = state?.credentials?.check;
   const selectedReport = state?.selectedReport || {};
   const customers = state?.static?.customers || [];
   const activities = state?.static?.activities || [];
@@ -117,11 +71,7 @@ export const ReportState = ({ children }) => {
         activities,
         projects,
         reports,
-        checkedCredentials,
         selectedReport,
-        state,
-        logout,
-        login,
         fetchReports
       }}
     >

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import Login from "../components/Login";
 import Reports from "../components/Reports";
-import { ReportContext } from "../context/report/ReportContext";
+import { AuthContext } from "../context/auth/AuthContext";
 
 export function Main() {
-  const { logout, checkedCredentials } = useContext(ReportContext);
+  const { logout, checkedCredentials } = useContext(AuthContext);
   return (
     <div>
       {checkedCredentials ? <Reports /> : <Login />}
