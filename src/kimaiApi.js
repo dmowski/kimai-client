@@ -76,7 +76,7 @@ const kimaiApi = {
     try {
       const jsonResult = await result.json();
       return jsonResult && jsonResult.message === "pong";
-    } catch (e) {
+    } catch {
       return false;
     }
   }

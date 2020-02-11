@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import "../styles/PreviewReport.scss";
 import converters from "../converters";
@@ -18,14 +18,9 @@ export default function PreviewReport({ report = {} }) {
 
   return (
     <article className={classList.join(" ")} onClick={select}>
-      <p className="description">{report.description || ""}</p>
-      <p className="project">{report.project?.name || ""}</p>
-      <p className="activity">{report.activity?.name || ""}</p>
-      {/*
-      <p className="date">
-        <i>{converter.date.toView(report.end)}</i>
-      </p>
-      */}
+      <p className="description">{report.description}</p>
+      <p className="project">{report.project?.name}</p>
+      <p className="activity">{report.activity?.name}</p>
       <p className="duration">{converters.duration.toView(report.duration)}</p>
     </article>
   );

@@ -13,6 +13,7 @@ export default function Reports() {
   useEffect(() => {
     fetchStatic();
     fetchReports();
+    // eslint-disable-next-line
   }, []);
 
   const todayString = dayjs(Date()).format("YYYY-MM-DD");

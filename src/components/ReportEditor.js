@@ -1,18 +1,10 @@
-import React, { useContext, useEffect } from "react";
-
-import converters from "../converters";
+import React, { useContext } from "react";
 import { ReportContext } from "../context/ReportContext";
 
 import "../styles/ReportEditor.scss";
 
 export default function ReportEditor() {
-  const {
-    selectReport,
-    selectedReport,
-    customers,
-    activities,
-    projects
-  } = useContext(ReportContext);
+  const { selectedReport } = useContext(ReportContext);
 
   const style = {
     display: selectedReport.id ? "block" : "none"
