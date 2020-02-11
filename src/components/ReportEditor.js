@@ -1,37 +1,90 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ReportContext } from "../context/ReportContext";
 
 import "../styles/ReportEditor.scss";
+const getInitialTemplate = () => ({
+  id: null,
+  description: "",
+  duration_h: 0,
+  duration_m: 0
+});
+
+function convertToEditor(srcReport = {}) {
+  const report = getInitialTemplate();
+  report.id = srcReport.id || report.id;
+  report.description = srcReport.description || report.description;
+
+  return report;
+}
 
 export default function ReportEditor() {
   const { selectedReport } = useContext(ReportContext);
+  const initialTemplate = getInitialTemplate();
+  const [editedReport, setReport] = useState(initialTemplate);
 
-  const style = {
-    display: selectedReport.id ? "block" : "none"
-  };
+  if (selectedReport.id && selectedReport.id !== editedReport.id) {
+    const report = convertToEditor(selectedReport);
+    setReport(report);
+  }
+
+  function handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    setReport({
+      ...editedReport,
+      [name]: value
+    });
+  }
+
   return (
-    <div style={style}>
+    <div className={!editedReport.id ? "hidden" : ""}>
       <h3>Editor</h3>
       <div className="reportEditor">
         <form>
           <label>
             <span>Description:</span>
             <br />
-            <textarea name="description" value={selectedReport.description} />
+            <textarea
+              name="description"
+              onChange={handleInputChange}
+              value={editedReport.description}
+            />
           </label>
           <br />
           <div className="row">
             <div className="date-picker">
               <span>Date:</span>
               <br />
-              <input className="time" min="0" type="text" name="date" />
+              <input
+                className="time"
+                min="0"
+                name="text"
+                onChange={handleInputChange}
+                value={editedReport.date}
+              />
             </div>
             <div>
               <span>Time:</span>
               <br />
-              <input className="time" min="0" type="number" name="duration" />
+              <input
+                className="time"
+                min="0"
+                type="text"
+                name="duration_h"
+                onChange={handleInputChange}
+                value={editedReport.duration_h}
+              />
               <i>h</i>
-              <input className="time" min="0" type="number" name="duration" />
+              <input
+                className="time"
+                min="0"
+                type="number"
+                name="duration_m"
+                onChange={handleInputChange}
+                value={editedReport.duration_m}
+              />
               <i>m</i>
             </div>
           </div>
