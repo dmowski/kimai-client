@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import "../styles/PreviewReport.scss";
 import converters from "../converters";
-import { ReportContext } from "../context/ReportContext";
+import { ReportContext } from "../context/report/ReportContext";
 
 export default function PreviewReport({ report = {} }) {
   const { selectReport, selectedReport } = useContext(ReportContext);

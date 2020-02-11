@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Login from "../components/Login";
 import Reports from "../components/Reports";
-import { ReportContext } from "../context/ReportContext";
+import { ReportContext } from "../context/report/ReportContext";
 
 export function Main() {
   const { logout, checkedCredentials } = useContext(ReportContext);

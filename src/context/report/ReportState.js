@@ -1,9 +1,9 @@
 import React, { useReducer, useEffect } from "react";
 import { ReportContext } from "./ReportContext";
-import converters from "../converters";
+import converters from "../../converters";
 import { reportReducer } from "./reportReducer";
-import kimaiApi from "../kimaiApi";
-import * as types from "./types";
+import kimaiApi from "../../kimaiApi";
+import * as types from "../types";
 
 export const ReportState = ({ children }) => {
   const [state, dispatch] = useReducer(

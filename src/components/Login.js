@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { ReportContext } from "../context/ReportContext";
+import { ReportContext } from "../context/report/ReportContext";
 import "../styles/Login.scss";
 
 let APIinformationImage = "./loginInformation.png";
