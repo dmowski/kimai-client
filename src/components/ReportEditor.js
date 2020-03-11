@@ -1,7 +1,10 @@
 import React, { useContext, useState } from "react";
 import { ReportContext } from "../context/report/ReportContext";
-
+import converter from "../converters";
+import DatePicker from "react-datepicker";
 import "../styles/ReportEditor.scss";
+import "react-datepicker/dist/react-datepicker.css";
+
 const getInitialTemplate = () => ({
   id: null,
   description: "",
@@ -13,7 +16,7 @@ function convertToEditor(srcReport = {}) {
   const report = getInitialTemplate();
   report.id = srcReport.id || report.id;
   report.description = srcReport.description || report.description;
-
+  report.beginDate = new Date(srcReport.begin);
   return report;
 }
 
@@ -38,6 +41,13 @@ export default function ReportEditor() {
     });
   }
 
+  function handleDate(date) {
+    setReport({
+      ...editedReport,
+      beginDate: date
+    });
+  }
+
   return (
     <div className={!editedReport.id ? "hidden" : ""}>
       <h3>Editor</h3>
@@ -57,12 +67,11 @@ export default function ReportEditor() {
             <div className="date-picker">
               <span>Date:</span>
               <br />
-              <input
-                className="time"
-                min="0"
-                name="text"
-                onChange={handleInputChange}
-                value={editedReport.date}
+              <DatePicker
+                selected={editedReport.beginDate}
+                onChange={date => handleDate(date)}
+                locale="en-GB"
+                placeholderText="Weeks start on Monday"
               />
             </div>
             <div>
