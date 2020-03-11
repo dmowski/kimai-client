@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { ReportContext } from "../context/report/ReportContext";
-import converter from "../converters";
 import DatePicker from "react-datepicker";
 import "../styles/ReportEditor.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,11 +16,48 @@ function convertToEditor(srcReport = {}) {
   report.id = srcReport.id || report.id;
   report.description = srcReport.description || report.description;
   report.beginDate = new Date(srcReport.begin);
+  report.customerId = srcReport.project.customer.id;
+  report.projectId = srcReport.project.id;
+  report.activityId = srcReport.activity.id;
   return report;
 }
 
+function getProjectsList(projects, customerId) {
+  return projects
+    .filter(project => {
+      return project.customer === parseInt(customerId, 10);
+    })
+    .map(project => (
+      <option key={project.id} value={project.id}>
+        {project.name}
+      </option>
+    ));
+}
+
+function getActivitiesList(activities, projectId) {
+  return activities
+    .filter(activity => {
+      return !activity.project || activity.project === parseInt(projectId);
+    })
+    .map(activity => (
+      <option key={activity.id} value={activity.id}>
+        {activity.name}
+      </option>
+    ));
+}
+
+function getCustomersList(customers) {
+  return customers.map(customer => (
+    <option key={customer.id} value={customer.id}>
+      {customer.name}
+    </option>
+  ));
+}
+
 export default function ReportEditor() {
-  const { selectedReport } = useContext(ReportContext);
+  const { selectedReport, customers, projects, activities } = useContext(
+    ReportContext
+  );
   const initialTemplate = getInitialTemplate();
   const [editedReport, setReport] = useState(initialTemplate);
 
@@ -102,24 +138,36 @@ export default function ReportEditor() {
             <label>
               <span>Customer:</span>
               <br />
-              <select>
-                <option value="a">AAA</option>
+              <select
+                name="customerId"
+                onChange={handleInputChange}
+                value={editedReport.customerId}
+              >
+                {getCustomersList(customers)}
               </select>
             </label>
 
             <label>
               <span>Project:</span>
               <br />
-              <select>
-                <option value="a">AAA</option>
+              <select
+                name="projectId"
+                onChange={handleInputChange}
+                value={editedReport.projectId}
+              >
+                {getProjectsList(projects, editedReport.customerId)}
               </select>
             </label>
 
             <label>
               <span>Activity:</span>
               <br />
-              <select>
-                <option value="a">AAA</option>
+              <select
+                name="activityId"
+                onChange={handleInputChange}
+                value={editedReport.activityId}
+              >
+                {getActivitiesList(activities, editedReport.projectId)}
               </select>
             </label>
           </div>
