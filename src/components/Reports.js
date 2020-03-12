@@ -5,7 +5,7 @@ import converter from "../converters";
 
 import "../styles/Reports.scss";
 import ReportEditor from "./ReportEditor";
-import PreviewReport from "./PreviewReport";
+import BlockReports from "./BlockReports";
 const cssClass = `reports`;
 const todayString = dayjs(Date()).format("YYYY-MM-DD");
 
@@ -36,29 +36,14 @@ export default function Reports() {
       };
     });
 
-  function getDuration(reports) {
-    const globalDuration = reports.reduce((duration, report) => {
-      return duration + report.duration;
-    }, 0);
-    return converter.duration.toView(globalDuration);
-  }
-
-  function getReports(reports) {
-    return reports.map(report => {
-      return <PreviewReport report={report} key={report.id} />;
-    });
-  }
-
   function getDays() {
     return daysBlock.map(dayBlock => {
       return (
-        <div className={`${cssClass}__day-block`} key={dayBlock.title}>
-          <p className={`${cssClass}__title`}>
-            <b>{dayBlock.title}</b>
-            <span>• {getDuration(dayBlock.reports)}</span>
-          </p>
-          {getReports(dayBlock.reports)}
-        </div>
+        <BlockReports
+          key={dayBlock.title}
+          title={dayBlock.title}
+          reports={dayBlock.reports}
+        ></BlockReports>
       );
     });
   }
