@@ -6,20 +6,31 @@ let APIinformationImage = "./loginInformation.png";
 
 export default function Login() {
   const { login, headers } = useContext(AuthContext);
-
-  const [loginStr, setLogin] = useState("");
-  const [passwordStr, setPassword] = useState("");
-  const [urlStr, setUrl] = useState("");
+  const [userData, setUserData] = useState({
+    username: "",
+    token: "",
+    url: ""
+  });
 
   async function loginFromForm(event) {
     event.preventDefault();
-    const isCorrectLogin = await login(urlStr, loginStr, passwordStr);
+    const isCorrectLogin = await login(
+      userData.url,
+      userData.username,
+      userData.token
+    );
 
     if (!isCorrectLogin) {
       alert("Token or login is not correct");
     }
   }
-
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setUserData({
+      ...userData,
+      [name]: value
+    });
+  }
   const displayStatus = headers ? "none" : "block";
 
   return (
@@ -31,8 +42,8 @@ export default function Login() {
           <label>
             <input
               name="url"
-              value={urlStr}
-              onChange={event => setUrl(event.target.value)}
+              value={userData.url}
+              onChange={handleInputChange}
               placeholder="Kimai URL"
               type="text"
               required
@@ -42,11 +53,11 @@ export default function Login() {
           <label>
             <input
               autoFocus
-              name="login"
-              placeholder="login"
+              name="username"
+              placeholder="username"
               type="text"
-              value={loginStr}
-              onChange={event => setLogin(event.target.value)}
+              value={userData.username}
+              onChange={handleInputChange}
               required
             />
           </label>
@@ -54,10 +65,10 @@ export default function Login() {
           <label>
             <input
               name="token"
-              placeholder="API password"
+              placeholder="API token"
               type="password"
-              value={passwordStr}
-              onChange={event => setPassword(event.target.value)}
+              value={userData.token}
+              onChange={handleInputChange}
               required
             />
           </label>
@@ -66,7 +77,7 @@ export default function Login() {
           </button>
           <details>
             <summary>
-              <p className="get-info-link">How to generate API password?</p>
+              <p className="get-info-link">How to generate API token?</p>
             </summary>
             <div className="how-get-api">
               <img src={APIinformationImage} alt="" />
@@ -87,7 +98,7 @@ export default function Login() {
               </p>
               <p>
                 Enter new
-                <b>API password</b>
+                <b>API token</b>
               </p>
             </div>
           </details>
