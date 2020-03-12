@@ -61,9 +61,15 @@ function getCustomersList(customers) {
 }
 
 export default function ReportEditor() {
-  const { selectedReport, customers, projects, activities } = useContext(
-    ReportContext
-  );
+  const {
+    selectedReport,
+    customers,
+    projects,
+    activities,
+    saveReport,
+    saveNewReport,
+    deleteReport
+  } = useContext(ReportContext);
   const initialTemplate = getInitialTemplate();
   const [editedReport, setReport] = useState(initialTemplate);
 
@@ -86,6 +92,49 @@ export default function ReportEditor() {
       ...editedReport,
       beginDate: date
     });
+  }
+
+  const convertReportToSendFormat = reportObject => {
+    const startDateStr = converter.date.toSrc(reportObject.beginDate);
+    const startDate = new Date(startDateStr);
+    const duration = converter.duration.toSrc(
+      reportObject.duration_h,
+      reportObject.duration_m
+    );
+    const endData = new Date(startDate.getTime() + duration * 1000);
+    const endDateStr = converter.date.toSrc(endData.toString());
+    return Object.assign(
+      {},
+      {
+        begin: startDateStr,
+        end: endDateStr,
+        project: reportObject.projectId,
+        activity: reportObject.activityId,
+        description: reportObject.description,
+        tags: ""
+      }
+    );
+  };
+
+  async function saveThisReportClickHandler(e) {
+    e.preventDefault();
+    const reportForSend = convertReportToSendFormat(editedReport);
+    await saveReport(editedReport.id, reportForSend);
+  }
+
+  async function saveAsNewClickHandler(e) {
+    e.preventDefault();
+    const reportForSend = convertReportToSendFormat(editedReport);
+    await saveNewReport(reportForSend);
+  }
+  async function deleteReportClickHandler(e) {
+    e.preventDefault();
+    const needDelete = window.confirm("Delete report?");
+    if (!needDelete) {
+      return;
+    }
+
+    await deleteReport(editedReport.id);
   }
 
   return (
@@ -178,9 +227,21 @@ export default function ReportEditor() {
 
           <br />
           <div className="buttons">
-            <button className="button-color button-color-fill">Update</button>
-            <button className="button-color">Create new</button>
-            <button className="button-color button-color-fail">Delete</button>
+            <button
+              onClick={saveThisReportClickHandler}
+              className="button-color button-color-fill"
+            >
+              Update
+            </button>
+            <button onClick={saveAsNewClickHandler} className="button-color">
+              Create new
+            </button>
+            <button
+              onClick={deleteReportClickHandler}
+              className="button-color button-color-fail"
+            >
+              Delete
+            </button>
           </div>
         </form>
       </div>

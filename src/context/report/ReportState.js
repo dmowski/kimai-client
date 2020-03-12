@@ -56,6 +56,39 @@ export const ReportState = ({ children }) => {
       payload: report
     });
   }
+  function checkForError(result, consoleMessage) {
+    console.log(consoleMessage, result);
+    const isGoodResult = result.code !== 400;
+    if (!isGoodResult) {
+      alert("Save error: " + result.message);
+    }
+    return isGoodResult;
+  }
+
+  async function saveReport(id, reportObject) {
+    if (!id) {
+      return;
+    }
+    const result = await kimaiApi.saveReport(url, headers, id, reportObject);
+    checkForError(result, "result of updating");
+    fetchReports();
+  }
+
+  async function saveNewReport(reportObject) {
+    const result = await kimaiApi.createReport(url, headers, reportObject);
+    checkForError(result, "result of saving new");
+    fetchReports();
+  }
+
+  async function deleteReport(id) {
+    if (!id) {
+      return;
+    }
+
+    const result = await kimaiApi.deleteReport(url, headers, id);
+    checkForError(result, "result of delete");
+    fetchReports();
+  }
 
   const selectedReport = state?.selectedReport || {};
   const customers = state?.static?.customers || [];
@@ -72,7 +105,10 @@ export const ReportState = ({ children }) => {
         projects,
         reports,
         selectedReport,
-        fetchReports
+        fetchReports,
+        saveReport,
+        saveNewReport,
+        deleteReport
       }}
     >
       {children}
