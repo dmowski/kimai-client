@@ -3,25 +3,29 @@ import React, { useContext } from "react";
 import "../styles/PreviewReport.scss";
 import converters from "../converters";
 import { ReportContext } from "../context/report/ReportContext";
+const cssClass = "preview-report";
 
 export default function PreviewReport({ report = {} }) {
   const { selectReport, selectedReport } = useContext(ReportContext);
 
-  const select = () => {
-    selectReport(report.id);
-  };
-
-  const classList = ["preview-report"];
+  const classList = [cssClass];
   if (selectedReport.id === report.id) {
-    classList.push("article_selected");
+    classList.push(`${cssClass}__selected`);
   }
 
   return (
-    <article className={classList.join(" ")} onClick={select}>
-      <p className="description">{report.description}</p>
-      <p className="project">{report.project?.name}</p>
-      <p className="activity">{report.activity?.name}</p>
-      <p className="duration">{converters.duration.toView(report.duration)}</p>
+    <article
+      className={classList.join(" ")}
+      onClick={() => {
+        selectReport(report.id);
+      }}
+    >
+      <p className={`${cssClass}__description`}>{report.description}</p>
+      <p className={`${cssClass}__project`}>{report.project?.name}</p>
+      <p className={`${cssClass}__activity`}>{report.activity?.name}</p>
+      <p className={`${cssClass}__duration`}>
+        {converters.duration.toView(report.duration)}
+      </p>
     </article>
   );
 }

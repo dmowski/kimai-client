@@ -10,7 +10,7 @@
   justify-content: space-between;
   cursor: pointer;
 
-  &.article_selected {
+  &__selected {
     background-color: #444;
     border: 1px solid #444;
     color: white;
@@ -20,7 +20,7 @@
     border: 1px solid #444;
   }
 
-  .duration {
+  &__duration {
     text-align: center;
   }
   p {

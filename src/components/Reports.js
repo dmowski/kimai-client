@@ -6,7 +6,7 @@ import converter from "../converters";
 import "../styles/Reports.scss";
 import ReportEditor from "./ReportEditor";
 import PreviewReport from "./PreviewReport";
-
+const cssClass = `reports`;
 export default function Reports() {
   const { fetchReports, reports, fetchStatic } = useContext(ReportContext);
 
@@ -65,8 +65,8 @@ export default function Reports() {
   function getDays() {
     return daysBlock.map(dayBlock => {
       return (
-        <div className="day-block" key={dayBlock.title}>
-          <p className="day-title">
+        <div className={`${cssClass}__day-block`} key={dayBlock.title}>
+          <p className={`${cssClass}__title`}>
             <b>{dayBlock.title}</b>
             <span>• {getDuration(dayBlock.reports)}</span>
           </p>
@@ -77,13 +77,13 @@ export default function Reports() {
   }
 
   return (
-    <div className="reports">
-      <div className="list">
+    <div className={cssClass}>
+      <div className={`${cssClass}__list`}>
         <h3>Reports</h3>
         {getDays()}
       </div>
 
-      <div className="report-editor">
+      <div className={`${cssClass}__editor`}>
         <ReportEditor />
       </div>
     </div>

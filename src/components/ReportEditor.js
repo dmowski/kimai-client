@@ -3,7 +3,7 @@ import { ReportContext } from "../context/report/ReportContext";
 import DatePicker from "react-datepicker";
 import "../styles/ReportEditor.scss";
 import "react-datepicker/dist/react-datepicker.css";
-
+const cssClass = "report-editor";
 const getInitialTemplate = () => ({
   id: null,
   description: "",
@@ -87,7 +87,7 @@ export default function ReportEditor() {
   return (
     <div className={!editedReport.id ? "hidden" : ""}>
       <h3>Editor</h3>
-      <div className="reportEditor">
+      <div className={cssClass}>
         <form>
           <label>
             <span>Description:</span>
@@ -99,7 +99,7 @@ export default function ReportEditor() {
             />
           </label>
           <br />
-          <div className="row">
+          <div className={`${cssClass}_row`}>
             <div className="date-picker">
               <span>Date:</span>
               <br />
@@ -114,7 +114,7 @@ export default function ReportEditor() {
               <span>Time:</span>
               <br />
               <input
-                className="time"
+                className={`${cssClass}_time`}
                 min="0"
                 type="text"
                 name="duration_h"
@@ -134,7 +134,7 @@ export default function ReportEditor() {
             </div>
           </div>
           <br />
-          <div className="row row-category">
+          <div className={`${cssClass}_row ${cssClass}_row__category`}>
             <label>
               <span>Customer:</span>
               <br />

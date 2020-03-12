@@ -1,4 +1,4 @@
-.reportEditor {
+.report-editor {
   textarea {
     width: 100%;
     height: 150px;
@@ -7,11 +7,11 @@
     min-width: 100px;
     display: inline-block;
   }
-  .time {
+  &_time {
     width: 70px;
   }
 
-  .time + i {
+  &_time + i {
     padding-right: 10px;
   }
   select {
@@ -21,12 +21,12 @@
   .button-color-fail {
     float: right;
   }
-  .row {
+  &_row {
     display: block;
     display: flex;
-  }
-  .row-category {
-    justify-content: space-between;
+    &__category {
+      justify-content: space-between;
+    }
   }
   .row label {
     width: calc(33.333% - 15px);
