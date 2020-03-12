@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { ReportContext } from "../context/report/ReportContext";
+import converter from "../converters";
 import DatePicker from "react-datepicker";
 import "../styles/ReportEditor.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,13 +13,18 @@ const getInitialTemplate = () => ({
 });
 
 function convertToEditor(srcReport = {}) {
-  const report = getInitialTemplate();
-  report.id = srcReport.id || report.id;
-  report.description = srcReport.description || report.description;
+  const initTemplate = getInitialTemplate();
+  const report = {};
+
+  for (let [key, initValue] of Object.entries(initTemplate)) {
+    report[key] = srcReport[key] || initValue;
+  }
   report.beginDate = new Date(srcReport.begin);
   report.customerId = srcReport.project.customer.id;
   report.projectId = srcReport.project.id;
   report.activityId = srcReport.activity.id;
+  report.duration_h = converter.duration.getHours(srcReport.duration);
+  report.duration_m = converter.duration.getMinutes(srcReport.duration);
   return report;
 }
 
