@@ -23,17 +23,7 @@ export default function Reports() {
         return converter.date.toView(report.begin);
       })
     )
-  ].sort((dayA, dayB) => {
-    var a = new Date(dayA).getTime();
-    var b = new Date(dayB).getTime();
-    if (a > b) {
-      return -1;
-    }
-    if (a < b) {
-      return 1;
-    }
-    return 0;
-  });
+  ].sort((a, b) => new Date(b) - new Date(a));
 
   const daysBlock = listOfDays.map(day => {
     const listOfReports = reports.filter(report => {
