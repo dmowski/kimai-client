@@ -7,6 +7,8 @@ import "../styles/Reports.scss";
 import ReportEditor from "./ReportEditor";
 import PreviewReport from "./PreviewReport";
 const cssClass = `reports`;
+const todayString = dayjs(Date()).format("YYYY-MM-DD");
+
 export default function Reports() {
   const { fetchReports, reports, fetchStatic } = useContext(ReportContext);
 
@@ -16,28 +18,23 @@ export default function Reports() {
     // eslint-disable-next-line
   }, []);
 
-  const todayString = dayjs(Date()).format("YYYY-MM-DD");
-  const listOfDays = [
-    ...new Set(
-      reports.map(report => {
-        return converter.date.toView(report.begin);
-      })
-    )
-  ].sort((a, b) => new Date(b) - new Date(a));
+  const days = {};
 
-  const daysBlock = listOfDays.map(day => {
-    const listOfReports = reports.filter(report => {
-      const reportDay = converter.date.toView(report.begin);
-      return reportDay === day;
-    });
-
-    const afterTitle = day === todayString ? " (Today)" : "";
-
-    return {
-      title: day + afterTitle,
-      reports: listOfReports
-    };
+  reports.forEach(report => {
+    const reportDay = converter.date.toView(report.begin);
+    days[reportDay] = days[reportDay] || [];
+    days[reportDay].push(report);
   });
+
+  const daysBlock = Object.keys(days)
+    .sort((a, b) => new Date(b) - new Date(a))
+    .map(day => {
+      const afterTitle = day === todayString ? " (Today)" : "";
+      return {
+        reports: days[day],
+        title: day + afterTitle
+      };
+    });
 
   function getDuration(reports) {
     const globalDuration = reports.reduce((duration, report) => {
