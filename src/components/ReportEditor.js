@@ -5,7 +5,7 @@ import "../styles/ReportEditor.scss";
 import "react-datepicker/dist/react-datepicker.css";
 const cssClass = "report-editor";
 const getInitialTemplate = () => ({
-  id: null,
+  id: undefined,
   description: "",
   duration_h: 0,
   duration_m: 0
@@ -61,15 +61,13 @@ export default function ReportEditor() {
   const initialTemplate = getInitialTemplate();
   const [editedReport, setReport] = useState(initialTemplate);
 
-  if (selectedReport.id && selectedReport.id !== editedReport.id) {
+  if (selectedReport.id !== editedReport.id) {
     const report = convertToEditor(selectedReport);
     setReport(report);
   }
 
   function handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+    const { name, value } = event.target;
 
     setReport({
       ...editedReport,
