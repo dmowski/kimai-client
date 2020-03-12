@@ -121,7 +121,7 @@ export default function ReportEditor() {
               />
               <i>h</i>
               <input
-                className="time"
+                className={`${cssClass}_time`}
                 min="0"
                 type="number"
                 name="duration_m"
