@@ -5,28 +5,6 @@ import DatePicker from "react-datepicker";
 import "../styles/ReportEditor.scss";
 import "react-datepicker/dist/react-datepicker.css";
 const cssClass = "report-editor";
-const getInitialTemplate = () => ({
-  id: undefined,
-  description: "",
-  duration_h: 0,
-  duration_m: 0
-});
-
-function convertToEditor(srcReport = {}) {
-  const initTemplate = getInitialTemplate();
-  const report = {};
-
-  for (let [key, initValue] of Object.entries(initTemplate)) {
-    report[key] = srcReport[key] || initValue;
-  }
-  report.beginDate = new Date(srcReport.begin);
-  report.customerId = srcReport.project.customer.id;
-  report.projectId = srcReport.project.id;
-  report.activityId = srcReport.activity.id;
-  report.duration_h = converter.duration.getHours(srcReport.duration);
-  report.duration_m = converter.duration.getMinutes(srcReport.duration);
-  return report;
-}
 
 function getProjectsList(projects, customerId) {
   return projects
@@ -70,11 +48,11 @@ export default function ReportEditor() {
     saveNewReport,
     deleteReport
   } = useContext(ReportContext);
-  const initialTemplate = getInitialTemplate();
+  const initialTemplate = converter.reports.getInitialTemplate();
   const [editedReport, setReport] = useState(initialTemplate);
 
   if (selectedReport.id !== editedReport.id) {
-    const report = convertToEditor(selectedReport);
+    const report = converter.reports.toFlat(selectedReport);
     setReport(report);
   }
 
@@ -94,47 +72,33 @@ export default function ReportEditor() {
     });
   }
 
-  const convertReportToSendFormat = reportObject => {
-    const startDateStr = converter.date.toSrc(reportObject.beginDate);
-    const startDate = new Date(startDateStr);
-    const duration = converter.duration.toSrc(
-      reportObject.duration_h,
-      reportObject.duration_m
-    );
-    const endData = new Date(startDate.getTime() + duration * 1000);
-    const endDateStr = converter.date.toSrc(endData.toString());
-    return Object.assign(
-      {},
-      {
-        begin: startDateStr,
-        end: endDateStr,
-        project: reportObject.projectId,
-        activity: reportObject.activityId,
-        description: reportObject.description,
-        tags: ""
-      }
-    );
-  };
-
   async function saveThisReportClickHandler(e) {
     e.preventDefault();
-    const reportForSend = convertReportToSendFormat(editedReport);
-    await saveReport(editedReport.id, reportForSend);
+    const reportForSend = converter.reports.toSrcFormat(editedReport);
+    const error = await saveReport(editedReport.id, reportForSend);
+    if (error) {
+      alert(`Error on update: ${error}`);
+    }
   }
 
   async function saveAsNewClickHandler(e) {
     e.preventDefault();
-    const reportForSend = convertReportToSendFormat(editedReport);
-    await saveNewReport(reportForSend);
+    const reportForSend = converter.reports.toSrcFormat(editedReport);
+    const error = await saveNewReport(reportForSend);
+    if (error) {
+      alert(`Error on create: ${error}`);
+    }
   }
   async function deleteReportClickHandler(e) {
     e.preventDefault();
-    const needDelete = window.confirm("Delete report?");
-    if (!needDelete) {
+    if (!window.confirm("Delete report?")) {
       return;
     }
 
-    await deleteReport(editedReport.id);
+    const error = await deleteReport(editedReport.id);
+    if (error) {
+      alert(`Error on save: ${error}`);
+    }
   }
 
   return (
