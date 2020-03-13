@@ -15,10 +15,12 @@ const handlers = {
       selectedReport: copyOfReport
     };
   },
-  [types.FETCH_REPORTS]: (state, { payload }) => {
+  [types.FETCH_REPORTS]: (state, { payload: reports }) => {
+    const copyOfReport = JSON.parse(JSON.stringify(reports[0]));
     return {
       ...state,
-      reports: payload
+      selectedReport: copyOfReport,
+      reports: reports
     };
   },
   [types.LOGIN]: (state, { payload: { url, login, password } }) => {
