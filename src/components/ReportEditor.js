@@ -58,17 +58,9 @@ export default function ReportEditor() {
 
   function handleInputChange(event) {
     const { name, value } = event.target;
-
     setReport({
       ...editedReport,
       [name]: value
-    });
-  }
-
-  function handleDate(date) {
-    setReport({
-      ...editedReport,
-      beginDate: date
     });
   }
 
@@ -122,7 +114,14 @@ export default function ReportEditor() {
               <br />
               <DatePicker
                 selected={editedReport.beginDate}
-                onChange={date => handleDate(date)}
+                onChange={date =>
+                  handleInputChange({
+                    target: {
+                      name: "beginDate",
+                      value: date
+                    }
+                  })
+                }
                 locale="en-GB"
                 placeholderText="Weeks start on Monday"
               />
