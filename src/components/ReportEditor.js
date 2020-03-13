@@ -1,9 +1,12 @@
 import React, { useContext, useState } from "react";
 import { ReportContext } from "../context/report/ReportContext";
 import converter from "../converters";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "../styles/report-editor.scss";
 import "react-datepicker/dist/react-datepicker.css";
+import ru from "date-fns/locale/ru";
+registerLocale("ru", ru);
+
 const cssClass = "report-editor";
 
 function getProjectsList(projects, customerId) {
@@ -118,7 +121,7 @@ export default function ReportEditor() {
                     }
                   })
                 }
-                locale="en-GB"
+                locale="ru"
                 placeholderText="Weeks start on Monday"
               />
             </div>
