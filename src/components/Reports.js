@@ -3,7 +3,7 @@ import { ReportContext } from "../context/report/ReportContext";
 import dayjs from "dayjs";
 import converter from "../converters";
 
-import "../styles/Reports.scss";
+import "../styles/reports.scss";
 import ReportEditor from "./ReportEditor";
 import BlockReports from "./BlockReports";
 const cssClass = `reports`;

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/auth/AuthContext";
-import "../styles/Login.scss";
+import "../styles/login.scss";
 
 let APIinformationImage = "./loginInformation.png";
 
@@ -35,7 +35,7 @@ export default function Login() {
 
   return (
     <div style={{ display: displayStatus }}>
-      <div className="login-container">
+      <div className="login">
         <form onSubmit={loginFromForm}>
           <h1>Kimai</h1>
 

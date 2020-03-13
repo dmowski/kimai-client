@@ -2,7 +2,7 @@ import React from "react";
 
 import converter from "../converters";
 
-import "../styles/Reports.scss";
+import "../styles/reports.scss";
 import PreviewReport from "./PreviewReport";
 const cssClass = `reports`;
 

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import "../styles/PreviewReport.scss";
+import "../styles/preview-report.scss";
 import converters from "../converters";
 import { ReportContext } from "../context/report/ReportContext";
 const cssClass = "preview-report";

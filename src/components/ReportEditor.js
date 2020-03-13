@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { ReportContext } from "../context/report/ReportContext";
 import converter from "../converters";
 import DatePicker from "react-datepicker";
-import "../styles/ReportEditor.scss";
+import "../styles/report-editor.scss";
 import "react-datepicker/dist/react-datepicker.css";
 const cssClass = "report-editor";
 
