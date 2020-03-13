@@ -5,12 +5,29 @@ import { reportReducer } from "./reportReducer";
 import kimaiApi from "../../kimaiApi";
 import * as types from "../types";
 
+const initState = {
+  staticData: {
+    customers: [],
+    activities: [],
+    projects: []
+  }
+};
+
 export const ReportState = ({ children }) => {
   const { url, headers } = useContext(AuthContext);
 
+  let localStorageState = localStorage.getItem("state");
+  if (localStorageState) {
+    localStorageState = Object.assign(
+      {},
+      initState,
+      JSON.parse(localStorageState)
+    );
+  }
+
   const [state, dispatch] = useReducer(
     reportReducer,
-    JSON.parse(localStorage.getItem("state") || "{}")
+    localStorageState || initState
   );
 
   useEffect(() => {
@@ -89,18 +106,12 @@ export const ReportState = ({ children }) => {
   }
 
   const selectedReport = state?.selectedReport || {};
-  const customers = state?.static?.customers || [];
-  const activities = state?.static?.activities || [];
-  const projects = state?.static?.projects || [];
-
   return (
     <ReportContext.Provider
       value={{
         selectReport,
         fetchStatic,
-        customers,
-        activities,
-        projects,
+        staticData: state.staticData,
         reports,
         selectedReport,
         fetchReports,

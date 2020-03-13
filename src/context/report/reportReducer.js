@@ -1,13 +1,10 @@
 import * as types from "../types";
 
 const handlers = {
-  [types.FETCH_STATIC]: (
-    state,
-    { payload: { customers, activities, projects } }
-  ) => {
+  [types.FETCH_STATIC]: (state, { payload }) => {
     return {
       ...state,
-      static: { customers, activities, projects }
+      staticData: payload
     };
   },
   [types.SELECT_REPORT]: (state, { payload: report }) => {

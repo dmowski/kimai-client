@@ -41,9 +41,7 @@ function getCustomersList(customers) {
 export default function ReportEditor() {
   const {
     selectedReport,
-    customers,
-    projects,
-    activities,
+    staticData,
     saveReport,
     saveNewReport,
     deleteReport
@@ -159,7 +157,7 @@ export default function ReportEditor() {
                 onChange={handleInputChange}
                 value={editedReport.customerId}
               >
-                {getCustomersList(customers)}
+                {getCustomersList(staticData.customers)}
               </select>
             </label>
 
@@ -171,7 +169,7 @@ export default function ReportEditor() {
                 onChange={handleInputChange}
                 value={editedReport.projectId}
               >
-                {getProjectsList(projects, editedReport.customerId)}
+                {getProjectsList(staticData.projects, editedReport.customerId)}
               </select>
             </label>
 
@@ -183,7 +181,10 @@ export default function ReportEditor() {
                 onChange={handleInputChange}
                 value={editedReport.activityId}
               >
-                {getActivitiesList(activities, editedReport.projectId)}
+                {getActivitiesList(
+                  staticData.activities,
+                  editedReport.projectId
+                )}
               </select>
             </label>
           </div>
