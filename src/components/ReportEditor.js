@@ -98,19 +98,17 @@ export default function ReportEditor() {
         <form>
           <label>
             <span>Description:</span>
-            <br />
             <textarea
               name="description"
               onChange={handleInputChange}
               value={editedReport.description}
             />
           </label>
-          <br />
           <div className={`${cssClass}_row`}>
             <div className="date-picker">
               <span>Date:</span>
-              <br />
               <DatePicker
+                className="date-picker__input"
                 selected={editedReport.beginDate}
                 onChange={date =>
                   handleInputChange({
@@ -126,7 +124,6 @@ export default function ReportEditor() {
             </div>
             <div>
               <span>Time:</span>
-              <br />
               <input
                 className={`${cssClass}_time`}
                 min="0"
@@ -147,11 +144,9 @@ export default function ReportEditor() {
               <i>m</i>
             </div>
           </div>
-          <br />
-          <div className={`${cssClass}_row ${cssClass}_row__category`}>
+          <div className={`${cssClass}_row`}>
             <label>
               <span>Customer:</span>
-              <br />
               <select
                 name="customerId"
                 onChange={handleInputChange}
@@ -163,7 +158,6 @@ export default function ReportEditor() {
 
             <label>
               <span>Project:</span>
-              <br />
               <select
                 name="projectId"
                 onChange={handleInputChange}
@@ -175,7 +169,6 @@ export default function ReportEditor() {
 
             <label>
               <span>Activity:</span>
-              <br />
               <select
                 name="activityId"
                 onChange={handleInputChange}
@@ -189,7 +182,6 @@ export default function ReportEditor() {
             </label>
           </div>
 
-          <br />
           <div className="buttons">
             <button
               onClick={saveThisReportClickHandler}
