@@ -16,7 +16,8 @@ const handlers = {
     };
   },
   [types.FETCH_REPORTS]: (state, { payload: reports }) => {
-    const copyOfReport = JSON.parse(JSON.stringify(reports[0]));
+    const copyOfReport =
+      state.selectedReport || JSON.parse(JSON.stringify(reports[0]));
     return {
       ...state,
       selectedReport: copyOfReport,
