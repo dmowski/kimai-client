@@ -56,13 +56,11 @@ export const ReportState = ({ children }) => {
       payload: report
     });
   }
-  function checkForError(result, consoleMessage) {
-    console.log(consoleMessage, result);
-    const isGoodResult = result.code !== 400;
-    if (!isGoodResult) {
-      alert("Save error: " + result.message);
+  function checkForError(result) {
+    if (result.code !== 400) {
+      return;
     }
-    return isGoodResult;
+    return result.message || JSON.stringify(result);
   }
 
   async function saveReport(id, reportObject) {
@@ -70,14 +68,14 @@ export const ReportState = ({ children }) => {
       return;
     }
     const result = await kimaiApi.saveReport(url, headers, id, reportObject);
-    checkForError(result, "result of updating");
     fetchReports();
+    return checkForError(result);
   }
 
   async function saveNewReport(reportObject) {
     const result = await kimaiApi.createReport(url, headers, reportObject);
-    checkForError(result, "result of saving new");
     fetchReports();
+    return checkForError(result);
   }
 
   async function deleteReport(id) {
@@ -86,8 +84,8 @@ export const ReportState = ({ children }) => {
     }
 
     const result = await kimaiApi.deleteReport(url, headers, id);
-    checkForError(result, "result of delete");
     fetchReports();
+    return checkForError(result);
   }
 
   const selectedReport = state?.selectedReport || {};
