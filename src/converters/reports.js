@@ -45,5 +45,23 @@ export default {
         tags: ""
       }
     );
+  },
+  fromSrcToView(id, srcReport) {
+    const report = {};
+    report.id = id;
+    report.description = srcReport.description;
+    report.activity = {
+      id: parseInt(srcReport.activity)
+    };
+    report.project = {
+      id: parseInt(srcReport.project)
+    };
+
+    report.duration =
+      date.toSeconds(srcReport.end) - date.toSeconds(srcReport.begin);
+
+    report.begin = srcReport.begin;
+    report.end = srcReport.end;
+    return report;
   }
 };

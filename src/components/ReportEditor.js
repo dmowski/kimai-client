@@ -43,7 +43,8 @@ function getCustomersList(customers) {
 
 export default function ReportEditor() {
   const {
-    selectedReport,
+    selectedReportId,
+    reports,
     staticData,
     saveReport,
     saveNewReport,
@@ -52,8 +53,11 @@ export default function ReportEditor() {
   const initialTemplate = converter.reports.getInitialTemplate();
   const [editedReport, setReport] = useState(initialTemplate);
 
-  if (selectedReport.id !== editedReport.id) {
-    const report = converter.reports.toFlat(selectedReport);
+  if (selectedReportId !== editedReport.id) {
+    const reportFromList = reports.find(
+      report => report.id === selectedReportId
+    );
+    const report = converter.reports.toFlat(reportFromList);
     setReport(report);
   }
 

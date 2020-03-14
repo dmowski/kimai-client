@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect, useContext } from "react";
+import converter from "../../converters";
 import { ReportContext } from "./ReportContext";
 import { AuthContext } from "../auth/AuthContext";
 import { reportReducer } from "./reportReducer";
@@ -66,11 +67,9 @@ export const ReportState = ({ children }) => {
 
   const reports = state?.reports || [];
   function selectReport(id) {
-    const report = reports.find(report => report.id === id) || { id };
-
     dispatch({
       type: types.SELECT_REPORT,
-      payload: report
+      payload: id
     });
   }
   function checkForError(result) {
@@ -84,6 +83,11 @@ export const ReportState = ({ children }) => {
     if (!id) {
       return;
     }
+    const report = converter.reports.fromSrcToView(id, reportObject);
+    dispatch({
+      type: types.UPDATE_REPORT,
+      payload: report
+    });
     const result = await kimaiApi.saveReport(url, headers, id, reportObject);
     fetchReports();
     return checkForError(result);
@@ -91,7 +95,18 @@ export const ReportState = ({ children }) => {
 
   async function saveNewReport(reportObject) {
     const result = await kimaiApi.createReport(url, headers, reportObject);
-    fetchReports();
+    const report = converter.reports.fromSrcToView(result.id, reportObject);
+
+    dispatch({
+      type: types.UPDATE_REPORT,
+      payload: report
+    });
+
+    await fetchReports();
+    dispatch({
+      type: types.SELECT_REPORT,
+      payload: report.id
+    });
     return checkForError(result);
   }
 
@@ -100,12 +115,17 @@ export const ReportState = ({ children }) => {
       return;
     }
 
+    dispatch({
+      type: types.DELETE_REPORT,
+      payload: id
+    });
+
     const result = await kimaiApi.deleteReport(url, headers, id);
     fetchReports();
     return checkForError(result);
   }
 
-  const selectedReport = state?.selectedReport || {};
+  const selectedReportId = state.selectedReportId;
   return (
     <ReportContext.Provider
       value={{
@@ -113,7 +133,7 @@ export const ReportState = ({ children }) => {
         fetchStatic,
         staticData: state.staticData,
         reports,
-        selectedReport,
+        selectedReportId,
         fetchReports,
         saveReport,
         saveNewReport,

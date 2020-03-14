@@ -6,12 +6,12 @@ import { ReportContext } from "../context/report/ReportContext";
 const cssClass = "preview-report";
 
 export default function PreviewReport({ report = {} }) {
-  const { selectReport, selectedReport, staticData } = useContext(
+  const { selectReport, selectedReportId, staticData } = useContext(
     ReportContext
   );
 
   const classList = [cssClass];
-  if (selectedReport.id === report.id) {
+  if (selectedReportId === report.id) {
     classList.push(`${cssClass}__selected`);
   }
 

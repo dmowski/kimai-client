@@ -9,5 +9,8 @@ export default {
   toSrc(userViewString) {
     const date = new Date(userViewString);
     return date.toISOString();
+  },
+  toSeconds(dataString = "") {
+    return dayjs(dataString || Date()).valueOf() / 1000;
   }
 };

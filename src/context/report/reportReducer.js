@@ -1,26 +1,49 @@
 import * as types from "../types";
 
 const handlers = {
+  [types.UPDATE_REPORT]: (state, { payload }) => {
+    const updatedReport = payload;
+    const newReports = state.reports.slice();
+    const reportIndex = newReports.findIndex(
+      report => report.id === updatedReport.id
+    );
+
+    if (reportIndex !== -1) {
+      newReports[reportIndex] = updatedReport;
+    } else {
+      newReports.unshift(updatedReport);
+    }
+    return {
+      ...state,
+      reports: newReports
+    };
+  },
+  [types.DELETE_REPORT]: (state, { payload }) => {
+    const id = payload;
+    const newReports = state.reports.slice().filter(report => report.id !== id);
+    return {
+      ...state,
+      reports: newReports,
+      selectedReportId: newReports[0].id
+    };
+  },
   [types.FETCH_STATIC]: (state, { payload }) => {
     return {
       ...state,
       staticData: payload
     };
   },
-  [types.SELECT_REPORT]: (state, { payload: report }) => {
-    const copyOfReport = JSON.parse(JSON.stringify(report));
-
+  [types.SELECT_REPORT]: (state, { payload }) => {
+    const id = payload;
     return {
       ...state,
-      selectedReport: copyOfReport
+      selectedReportId: id
     };
   },
   [types.FETCH_REPORTS]: (state, { payload: reports }) => {
-    const copyOfReport =
-      state.selectedReport || JSON.parse(JSON.stringify(reports[0]));
     return {
       ...state,
-      selectedReport: copyOfReport,
+      selectedReportId: state.selectedReportId || reports[0].id,
       reports: reports
     };
   },
