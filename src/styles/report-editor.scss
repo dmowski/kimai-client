@@ -1,4 +1,13 @@
 .report-editor {
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+  }
+  &__main-text {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
   textarea {
     width: 100%;
     height: 150px;
@@ -9,6 +18,14 @@
   }
   &_time {
     width: 70px;
+  }
+  &_buttons {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+  &_time-container {
+    grid-column-start: 2;
+    grid-column-end: 4;
   }
 
   &_time + i {
@@ -21,11 +38,7 @@
   .button-color-fail {
     float: right;
   }
-  &_row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 15px;
-  }
+
   .date-picker {
     & > div,
     input {

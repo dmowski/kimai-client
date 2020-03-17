@@ -103,7 +103,7 @@ export default function ReportEditor() {
       <h3>Editor</h3>
       <div className={cssClass}>
         <form>
-          <label>
+          <label className={`${cssClass}__main-text`}>
             <span>Description:</span>
             <textarea
               name="description"
@@ -111,85 +111,81 @@ export default function ReportEditor() {
               value={editedReport.description}
             />
           </label>
-          <div className={`${cssClass}_row`}>
-            <div className="date-picker">
-              <span>Date:</span>
-              <DatePicker
-                className="date-picker__input"
-                selected={editedReport.beginDate}
-                onChange={date =>
-                  handleInputChange({
-                    target: {
-                      name: "beginDate",
-                      value: date
-                    }
-                  })
-                }
-                locale="ru"
-                placeholderText="Weeks start on Monday"
-              />
-            </div>
-            <div>
-              <span>Time:</span>
-              <input
-                className={`${cssClass}_time`}
-                min="0"
-                type="text"
-                name="duration_h"
-                onChange={handleInputChange}
-                value={editedReport.duration_h}
-              />
-              <i>h</i>
-              <input
-                className={`${cssClass}_time`}
-                min="0"
-                type="number"
-                name="duration_m"
-                onChange={handleInputChange}
-                value={editedReport.duration_m}
-              />
-              <i>m</i>
-            </div>
-          </div>
-          <div className={`${cssClass}_row`}>
-            <label>
-              <span>Customer:</span>
-              <select
-                name="customerId"
-                onChange={handleInputChange}
-                value={editedReport.customerId}
-              >
-                {getCustomersList(staticData.customers)}
-              </select>
-            </label>
 
-            <label>
-              <span>Project:</span>
-              <select
-                name="projectId"
-                onChange={handleInputChange}
-                value={editedReport.projectId}
-              >
-                {getProjectsList(staticData.projects, editedReport.customerId)}
-              </select>
-            </label>
-
-            <label>
-              <span>Activity:</span>
-              <select
-                name="activityId"
-                onChange={handleInputChange}
-                value={editedReport.activityId}
-              >
-                {getActivitiesList(
-                  staticData.activities,
-                  editedReport.projectId
-                )}
-              </select>
-            </label>
+          <div className="date-picker">
+            <span>Date:</span>
+            <DatePicker
+              className="date-picker__input"
+              selected={editedReport.beginDate}
+              onChange={date =>
+                handleInputChange({
+                  target: {
+                    name: "beginDate",
+                    value: date
+                  }
+                })
+              }
+              locale="ru"
+              placeholderText="Weeks start on Monday"
+            />
           </div>
 
-          <div className="buttons">
+          <div className={`${cssClass}_time-container`}>
+            <span>Time:</span>
+            <input
+              className={`${cssClass}_time`}
+              min="0"
+              type="text"
+              name="duration_h"
+              onChange={handleInputChange}
+              value={editedReport.duration_h}
+            />
+            <i>h</i>
+            <input
+              className={`${cssClass}_time`}
+              min="0"
+              type="number"
+              name="duration_m"
+              onChange={handleInputChange}
+              value={editedReport.duration_m}
+            />
+            <i>m</i>
+          </div>
+
+          <label>
+            <span>Customer:</span>
+            <select
+              name="customerId"
+              onChange={handleInputChange}
+              value={editedReport.customerId}
+            >
+              {getCustomersList(staticData.customers)}
+            </select>
+          </label>
+
+          <label>
+            <span>Project:</span>
+            <select
+              name="projectId"
+              onChange={handleInputChange}
+              value={editedReport.projectId}
+            >
+              {getProjectsList(staticData.projects, editedReport.customerId)}
+            </select>
+          </label>
+
+          <label>
+            <span>Activity:</span>
+            <select
+              name="activityId"
+              onChange={handleInputChange}
+              value={editedReport.activityId}
+            >
+              {getActivitiesList(staticData.activities, editedReport.projectId)}
+            </select>
+          </label>
+
+          <div className={`${cssClass}_buttons`}>
             <button
               onClick={saveThisReportClickHandler}
               className="button-color button-color-fill"
