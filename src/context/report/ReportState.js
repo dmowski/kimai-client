@@ -4,7 +4,7 @@ import { ReportContext } from "./ReportContext";
 import { AuthContext } from "../auth/AuthContext";
 import { reportReducer } from "./reportReducer";
 import kimaiApi from "../../kimaiApi";
-import * as types from "../types";
+import types from "../types";
 
 const initState = {
   staticData: {

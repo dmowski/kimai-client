@@ -1,4 +1,4 @@
-import * as types from "../types";
+import types from "../types";
 
 const handlers = {
   [types.UPDATE_REPORT]: (state, { payload }) => {

@@ -3,7 +3,7 @@ import { AuthContext } from "./AuthContext";
 import converters from "../../converters";
 import { AuthReducer } from "./AuthReducer";
 import kimaiApi from "../../kimaiApi";
-import * as types from "../types";
+import types from "../types";
 
 export const AuthState = ({ children }) => {
   const [state, dispatch] = useReducer(
