@@ -10,14 +10,14 @@ const handlers = {
       check: true,
       headers: {
         "X-AUTH-USER": login,
-        "X-AUTH-TOKEN": password
-      }
+        "X-AUTH-TOKEN": password,
+      },
     };
   },
-  [types.LOGOUT]: state => {
+  [types.LOGOUT]: (state) => {
     return {};
   },
-  DEFAULT: state => state
+  DEFAULT: (state) => state,
 };
 
 export const AuthReducer = (state, action) => {

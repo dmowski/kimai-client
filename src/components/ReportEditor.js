@@ -11,10 +11,10 @@ const cssClass = "report-editor";
 
 function getProjectsList(projects, customerId) {
   return projects
-    .filter(project => {
+    .filter((project) => {
       return project.customer === parseInt(customerId, 10);
     })
-    .map(project => (
+    .map((project) => (
       <option key={project.id} value={project.id}>
         {project.name}
       </option>
@@ -23,10 +23,10 @@ function getProjectsList(projects, customerId) {
 
 function getActivitiesList(activities, projectId) {
   return activities
-    .filter(activity => {
+    .filter((activity) => {
       return !activity.project || activity.project === parseInt(projectId);
     })
-    .map(activity => (
+    .map((activity) => (
       <option key={activity.id} value={activity.id}>
         {activity.name}
       </option>
@@ -34,7 +34,7 @@ function getActivitiesList(activities, projectId) {
 }
 
 function getCustomersList(customers) {
-  return customers.map(customer => (
+  return customers.map((customer) => (
     <option key={customer.id} value={customer.id}>
       {customer.name}
     </option>
@@ -48,14 +48,14 @@ export default function ReportEditor() {
     staticData,
     saveReport,
     saveNewReport,
-    deleteReport
+    deleteReport,
   } = useContext(ReportContext);
   const initialTemplate = converter.reports.getInitialTemplate();
   const [editedReport, setReport] = useState(initialTemplate);
 
   if (selectedReportId !== editedReport.id) {
     const reportFromList = reports.find(
-      report => report.id === selectedReportId
+      (report) => report.id === selectedReportId
     );
     const report = converter.reports.toFlat(reportFromList);
     setReport(report);
@@ -65,7 +65,7 @@ export default function ReportEditor() {
     const { name, value } = event.target;
     setReport({
       ...editedReport,
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -117,12 +117,12 @@ export default function ReportEditor() {
             <DatePicker
               className="date-picker__input"
               selected={editedReport.beginDate}
-              onChange={date =>
+              onChange={(date) =>
                 handleInputChange({
                   target: {
                     name: "beginDate",
-                    value: date
-                  }
+                    value: date,
+                  },
                 })
               }
               locale="ru"

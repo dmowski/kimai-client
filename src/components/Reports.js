@@ -20,7 +20,7 @@ export default function Reports() {
 
   const days = {};
 
-  reports.forEach(report => {
+  reports.forEach((report) => {
     const reportDay = converter.date.toView(report.begin);
     days[reportDay] = days[reportDay] || [];
     days[reportDay].push(report);
@@ -28,16 +28,16 @@ export default function Reports() {
 
   const daysBlock = Object.keys(days)
     .sort((a, b) => new Date(b) - new Date(a))
-    .map(day => {
+    .map((day) => {
       const afterTitle = day === todayString ? " (Today)" : "";
       return {
         reports: days[day],
-        title: day + afterTitle
+        title: day + afterTitle,
       };
     });
 
   function getDays() {
-    return daysBlock.map(dayBlock => {
+    return daysBlock.map((dayBlock) => {
       return (
         <BlockReports
           key={dayBlock.title}

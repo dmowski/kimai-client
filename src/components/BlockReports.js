@@ -8,7 +8,7 @@ const cssClass = `reports`;
 
 export default function BlockReports({ reports = [], title = "" }) {
   function getReports(reports) {
-    return reports.map(report => {
+    return reports.map((report) => {
       return <PreviewReport report={report} key={report.id} />;
     });
   }

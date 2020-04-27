@@ -10,8 +10,8 @@ const initState = {
   staticData: {
     customers: [],
     activities: [],
-    projects: []
-  }
+    projects: [],
+  },
 };
 
 export const ReportState = ({ children }) => {
@@ -40,7 +40,7 @@ export const ReportState = ({ children }) => {
     if (Array.isArray(reports)) {
       dispatch({
         type: types.FETCH_REPORTS,
-        payload: reports
+        payload: reports,
       });
     }
   };
@@ -59,8 +59,8 @@ export const ReportState = ({ children }) => {
         payload: {
           customers,
           activities,
-          projects
-        }
+          projects,
+        },
       });
     }
   };
@@ -69,7 +69,7 @@ export const ReportState = ({ children }) => {
   function selectReport(id) {
     dispatch({
       type: types.SELECT_REPORT,
-      payload: id
+      payload: id,
     });
   }
   function checkForError(result) {
@@ -86,7 +86,7 @@ export const ReportState = ({ children }) => {
     const report = converter.reports.fromSrcToView(id, reportObject);
     dispatch({
       type: types.UPDATE_REPORT,
-      payload: report
+      payload: report,
     });
     const result = await kimaiApi.saveReport(url, headers, id, reportObject);
     fetchReports();
@@ -99,13 +99,13 @@ export const ReportState = ({ children }) => {
 
     dispatch({
       type: types.UPDATE_REPORT,
-      payload: report
+      payload: report,
     });
 
     await fetchReports();
     dispatch({
       type: types.SELECT_REPORT,
-      payload: report.id
+      payload: report.id,
     });
     return checkForError(result);
   }
@@ -117,7 +117,7 @@ export const ReportState = ({ children }) => {
 
     dispatch({
       type: types.DELETE_REPORT,
-      payload: id
+      payload: id,
     });
 
     const result = await kimaiApi.deleteReport(url, headers, id);
@@ -137,7 +137,7 @@ export const ReportState = ({ children }) => {
         fetchReports,
         saveReport,
         saveNewReport,
-        deleteReport
+        deleteReport,
       }}
     >
       {children}

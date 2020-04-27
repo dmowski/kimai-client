@@ -25,5 +25,5 @@ export default {
     const hoursTime = parseInt(hours, 10) * 60 * 60;
     const minutesTime = parseInt(minutes, 10) * 60;
     return hoursTime + minutesTime;
-  }
+  },
 };

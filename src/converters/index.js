@@ -16,5 +16,5 @@ export default {
   reports,
   date,
   duration,
-  parseKiamaiUrl
+  parseKiamaiUrl,
 };

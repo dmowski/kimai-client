@@ -12,5 +12,5 @@ export default {
   },
   toSeconds(dataString = "") {
     return dayjs(dataString || Date()).valueOf() / 1000;
-  }
+  },
 };

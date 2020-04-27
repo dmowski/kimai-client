@@ -9,7 +9,7 @@ export default function Login() {
   const [userData, setUserData] = useState({
     username: "",
     token: "",
-    url: ""
+    url: "",
   });
 
   async function loginFromForm(event) {
@@ -28,7 +28,7 @@ export default function Login() {
     const { name, value } = event.target;
     setUserData({
       ...userData,
-      [name]: value
+      [name]: value,
     });
   }
   const displayStatus = headers ? "none" : "block";

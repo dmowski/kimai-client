@@ -6,7 +6,7 @@ export default {
       id: undefined,
       description: "",
       duration_h: 0,
-      duration_m: 0
+      duration_m: 0,
     };
   },
   toFlat(srcReport = {}) {
@@ -42,7 +42,7 @@ export default {
         project: flatReport.projectId,
         activity: flatReport.activityId,
         description: flatReport.description,
-        tags: ""
+        tags: "",
       }
     );
   },
@@ -51,10 +51,10 @@ export default {
     report.id = id;
     report.description = srcReport.description;
     report.activity = {
-      id: parseInt(srcReport.activity)
+      id: parseInt(srcReport.activity),
     };
     report.project = {
-      id: parseInt(srcReport.project)
+      id: parseInt(srcReport.project),
     };
 
     report.duration =
@@ -63,5 +63,5 @@ export default {
     report.begin = srcReport.begin;
     report.end = srcReport.end;
     return report;
-  }
+  },
 };
