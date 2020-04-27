@@ -6,9 +6,12 @@ import { ReportContext } from "../context/report/ReportContext";
 const cssClass = "preview-report";
 
 export default function PreviewReport({ report = {} }) {
-  const { selectReport, selectedReportId, staticData } = useContext(
-    ReportContext
-  );
+  const {
+    selectReport,
+    selectedReportId,
+    staticData,
+    deleteReport,
+  } = useContext(ReportContext);
 
   const classList = [cssClass];
   if (selectedReportId === report.id) {
@@ -16,12 +19,24 @@ export default function PreviewReport({ report = {} }) {
   }
 
   const project = staticData.projects.find(
-    project => project.id === report.project.id
+    (project) => project.id === report.project.id
   );
 
   const activity = staticData.activities.find(
-    activity => activity.id === report.activity.id
+    (activity) => activity.id === report.activity.id
   );
+
+  async function deleteReportClickHandler(e) {
+    e.preventDefault();
+    if (!window.confirm("Delete report?")) {
+      return;
+    }
+
+    const error = await deleteReport(report.id);
+    if (error) {
+      alert(`Error on save: ${error}`);
+    }
+  }
 
   return (
     <article
@@ -36,6 +51,12 @@ export default function PreviewReport({ report = {} }) {
       <p className={`${cssClass}__duration`}>
         {converters.duration.toView(report.duration)}
       </p>
+      <button
+        className={`${cssClass}__delete`}
+        onClick={deleteReportClickHandler}
+      >
+        ⨉
+      </button>
     </article>
   );
 }

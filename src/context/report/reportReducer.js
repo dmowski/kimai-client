@@ -5,7 +5,7 @@ const handlers = {
     const updatedReport = payload;
     const newReports = state.reports.slice();
     const reportIndex = newReports.findIndex(
-      report => report.id === updatedReport.id
+      (report) => report.id === updatedReport.id
     );
 
     if (reportIndex !== -1) {
@@ -15,36 +15,39 @@ const handlers = {
     }
     return {
       ...state,
-      reports: newReports
+      reports: newReports,
     };
   },
   [types.DELETE_REPORT]: (state, { payload }) => {
     const id = payload;
-    const newReports = state.reports.slice().filter(report => report.id !== id);
+    const newReports = state.reports
+      .slice()
+      .filter((report) => report.id !== id);
     return {
       ...state,
       reports: newReports,
-      selectedReportId: newReports[0].id
+      selectedReportId: newReports[0].id,
     };
   },
   [types.FETCH_STATIC]: (state, { payload }) => {
     return {
       ...state,
-      staticData: payload
+      staticData: payload,
     };
   },
   [types.SELECT_REPORT]: (state, { payload }) => {
     const id = payload;
+    const ifExistReport = state.reports.find((report) => report.id === id);
     return {
       ...state,
-      selectedReportId: id
+      selectedReportId: ifExistReport ? id : state.selectedReportId,
     };
   },
   [types.FETCH_REPORTS]: (state, { payload: reports }) => {
     return {
       ...state,
       selectedReportId: state.selectedReportId || reports[0].id,
-      reports: reports
+      reports: reports,
     };
   },
   [types.LOGIN]: (state, { payload: { url, login, password } }) => {
@@ -57,9 +60,9 @@ const handlers = {
         check: true,
         headers: {
           "X-AUTH-USER": login,
-          "X-AUTH-TOKEN": password
-        }
-      }
+          "X-AUTH-TOKEN": password,
+        },
+      },
     };
   },
   checkLogin: (state, { payload }) => {
@@ -67,12 +70,12 @@ const handlers = {
       ...state,
       credentials: {
         ...state.credentials,
-        check: payload
-      }
+        check: payload,
+      },
     };
   },
-  [types.LOGOUT]: state => null,
-  DEFAULT: state => state
+  [types.LOGOUT]: (state) => null,
+  DEFAULT: (state) => state,
 };
 
 export const reportReducer = (state, action) => {

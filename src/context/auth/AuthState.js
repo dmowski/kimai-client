@@ -19,7 +19,7 @@ export const AuthState = ({ children }) => {
 
   function logout() {
     dispatch({
-      type: types.LOGOUT
+      type: types.LOGOUT,
     });
   }
 
@@ -33,8 +33,8 @@ export const AuthState = ({ children }) => {
         payload: {
           url: urlclear,
           login,
-          password
-        }
+          password,
+        },
       });
     }
     return isCorrectLogin;
@@ -54,7 +54,7 @@ export const AuthState = ({ children }) => {
         logout,
         url: state.url,
         headers: state.headers,
-        login
+        login,
       }}
     >
       {children}
