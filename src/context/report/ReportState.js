@@ -93,20 +93,27 @@ export const ReportState = ({ children }) => {
     return checkForError(result);
   }
 
-  async function saveNewReport(reportObject) {
-    const result = await kimaiApi.createReport(url, headers, reportObject);
-    const report = converter.reports.fromSrcToView(result.id, reportObject);
+  async function saveNewReport(reportInEditorFormat) {
+    const reportForSend = converter.reports.toSrcFormat(reportInEditorFormat);
+    const tmpId = Date.now();
 
+    const tmpViewReport = converter.reports.fromSrcToView(
+      tmpId,
+      reportForSend,
+      {
+        customerId: reportInEditorFormat.customerId,
+      }
+    );
     dispatch({
-      type: types.UPDATE_REPORT,
-      payload: report,
+      type: types.NEW_REPORT,
+      payload: tmpViewReport,
+    });
+    const result = await kimaiApi.createReport(url, headers, reportForSend);
+    dispatch({
+      type: types.CHANGE_REPORT_ID,
+      payload: { oldId: tmpId, newId: result.id },
     });
 
-    await fetchReports();
-    dispatch({
-      type: types.SELECT_REPORT,
-      payload: report.id,
-    });
     return checkForError(result);
   }
 
@@ -121,7 +128,6 @@ export const ReportState = ({ children }) => {
     });
 
     const result = await kimaiApi.deleteReport(url, headers, id);
-    fetchReports();
     return checkForError(result);
   }
 

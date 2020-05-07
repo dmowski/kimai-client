@@ -1,6 +1,34 @@
 import types from "../types";
 
 const handlers = {
+  [types.NEW_REPORT]: (state, { payload }) => {
+    const report = payload;
+    const newReports = state.reports.slice();
+    newReports.unshift(report);
+    return {
+      ...state,
+      reports: newReports,
+      selectedReportId: report.id,
+    };
+  },
+  [types.CHANGE_REPORT_ID]: (state, { payload }) => {
+    const newId = payload.newId;
+    const oldId = payload.oldId;
+    const selectedReportId =
+      state.selectedReportId === oldId ? newId : state.selectedReportId;
+    const newReports = state.reports.slice();
+    const reportIndex = newReports.findIndex((report) => report.id === oldId);
+    if (!newReports[reportIndex]) {
+      return { ...state };
+    }
+    newReports[reportIndex].id = newId;
+
+    return {
+      ...state,
+      reports: newReports,
+      selectedReportId: selectedReportId,
+    };
+  },
   [types.UPDATE_REPORT]: (state, { payload }) => {
     const updatedReport = payload;
     const newReports = state.reports.slice();

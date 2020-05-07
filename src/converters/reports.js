@@ -46,7 +46,7 @@ export default {
       }
     );
   },
-  fromSrcToView(id, srcReport) {
+  fromSrcToView(id, srcReport, additionalInformation = {}) {
     const report = {};
     report.id = id;
     report.description = srcReport.description;
@@ -56,6 +56,11 @@ export default {
     report.project = {
       id: parseInt(srcReport.project),
     };
+    if (additionalInformation.customerId) {
+      report.project.customer = {
+        id: additionalInformation.customerId,
+      };
+    }
 
     report.duration =
       date.toSeconds(srcReport.end) - date.toSeconds(srcReport.begin);

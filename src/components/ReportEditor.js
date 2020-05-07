@@ -80,8 +80,7 @@ export default function ReportEditor() {
 
   async function saveAsNewClickHandler(e) {
     e.preventDefault();
-    const reportForSend = converter.reports.toSrcFormat(editedReport);
-    const error = await saveNewReport(reportForSend);
+    const error = await saveNewReport(editedReport);
     if (error) {
       alert(`Error on create: ${error}`);
     }
