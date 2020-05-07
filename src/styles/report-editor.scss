@@ -22,6 +22,9 @@
   &_buttons {
     grid-column-start: 1;
     grid-column-end: 4;
+    button + button {
+      margin-left: 5px;
+    }
   }
   &_time-container {
     grid-column-start: 2;
